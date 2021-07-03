@@ -34,7 +34,7 @@ docker-machine rm #remove cloud machine with docker
 docker-machine ls #list of machines
 
 docker build -t reddit:latest . # build docker image from current container
-docker run --name reddit -d --network=host reddit:latest
+docker run --name reddit -d --network host reddit:latest
 
 docker tag reddit:latest <your-login>/otus-reddit:1.0 # tag image
 docker push <your-login>/otus-reddit:1.0 # push image to hub (or any other repo)
