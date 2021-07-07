@@ -8,9 +8,9 @@ ENV APP_HOME /app
 RUN mkdir ${APP_HOME}
 
 WORKDIR ${APP_HOME}
-COPY Gemfile* ${APP_HOME}
+COPY Gemfile* ${APP_HOME}/
 RUN bundle install
-COPY . ${APP_HOME}
+COPY . ${APP_HOME}/
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000
