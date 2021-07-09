@@ -31,4 +31,3 @@ volumes:
 networks: 
   reddit_frontent:
   reddit_backend:
-  
