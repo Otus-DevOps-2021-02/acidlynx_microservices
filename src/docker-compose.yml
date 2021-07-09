@@ -5,27 +5,30 @@ services:
     volumes: 
       - post_db:/data/db
     networks: 
-      - reddit
+      - reddit_backend
   ui:
     build: ./ui
     image: ${USERNAME}/ui:${MS_UI_VERSION}
     ports: 
       - ${MS_UI_PORT}:${MS_UI_PORT}/tcp
     networks: 
-      - reddit
+      - reddit_frontent
   post:
     build: ./post-py
     image: ${USERNAME}/post:${MS_POST_VERSION}
     networks: 
-      - reddit
+      - reddit_frontent
+      - reddit_backend
   comment:
     build: ./comment
     image: ${USERNAME}/comment:${MS_COMMENT_VERSION}
     networks:
-      - reddit
+      - reddit_frontent
+      - reddit_backend
 volumes: 
   post_db:
 
 networks: 
-  reddit:
+  reddit_frontent:
+  reddit_backend:
   
