@@ -38,6 +38,8 @@ docker run --name reddit -d --network host reddit:latest
 
 docker tag reddit:latest <your-login>/otus-reddit:1.0 # tag image
 docker push <your-login>/otus-reddit:1.0 # push image to hub (or any other repo)
-
-
 ```
+
+Homework 18
+
+`docker-compose` has option -p for --project-name in commands
