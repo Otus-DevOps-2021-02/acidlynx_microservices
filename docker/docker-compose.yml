@@ -7,20 +7,20 @@ services:
     networks: 
       - reddit_backend
   ui:
-    build: ./ui
+    build: ../src/ui
     image: ${USERNAME}/ui:${MS_UI_VERSION}
     ports: 
       - ${MS_UI_PORT}:${MS_UI_PORT}/tcp
     networks:
       - reddit_frontent
   post:
-    build: ./post-py
+    build: ../src/post-py
     image: ${USERNAME}/post:${MS_POST_VERSION}
     networks: 
       - reddit_frontent
       - reddit_backend
   comment:
-    build: ./comment
+    build: ../src/comment
     image: ${USERNAME}/comment:${MS_COMMENT_VERSION}
     networks:
       - reddit_frontent
