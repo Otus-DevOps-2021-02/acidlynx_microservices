@@ -54,13 +54,13 @@ yc compute instance create \
   --zone ru-central1-a \
   --network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
   --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=15 \
-  --ssh-key ~/.ssh/id_rsa.pub
+  --ssh-key ~/.ssh/yandexcloud_appuser_rsa.pub 
 	
 docker-machine create \
   --driver generic \
-  --generic-ip-address=84.201.135.110 \
+  --generic-ip-address=178.154.225.52 \
   --generic-ssh-user yc-user \
-  --generic-ssh-key ~/.ssh/id_rsa \
+  --generic-ssh-key ~/.ssh/yandexcloud_appuser_rsa \
   docker-host
   
 eval $(docker-machine env docker-host)
@@ -71,3 +71,5 @@ Do the same command in several folders
 ```bash
 for i in ui post-py comment; do cd src/$i; bash docker_build.sh; cd -; done
 ```
+
+Docker hub is [here](https://hub.docker.com/u/binira)
