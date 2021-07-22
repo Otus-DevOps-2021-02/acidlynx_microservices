@@ -6,6 +6,9 @@ services:
     ports:
       - '24224:24224'
       - '24224:24224/udp'
+    networks: 
+      - reddit_backend
+      - reddit_frontend
   
   elasticsearch:
     image: elasticsearch:7.4.0
@@ -18,8 +21,26 @@ services:
       - 9200
     ports: 
       - '9200:9200'
+    networks: 
+      - reddit_backend
+      - reddit_frontend
   
   kibana:
     image: kibana:7.4.0
     ports: 
       - '5601:5601'
+    networks: 
+      - reddit_backend
+      - reddit_frontend
+
+  zipkin:
+    image: openzipkin/zipkin:2.21.0
+    ports: 
+      - '9411:9411'
+    networks: 
+      - reddit_frontend
+      - reddit_backend
+
+networks:
+  reddit_frontend:
+  reddit_backend:

@@ -11,20 +11,42 @@ services:
     image: ${USERNAME}/ui:${MS_UI_VERSION}
     ports: 
       - ${MS_UI_PORT}:${MS_UI_PORT}/tcp
+    logging:
+      driver: "fluentd"
+      options: 
+        fluentd-address: localhost:24224
+        tag: service.ui
     networks:
-      - reddit_frontent
+      - reddit_frontend
+    environment: 
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
   post:
     build: ../src/post-py
     image: ${USERNAME}/post:${MS_POST_VERSION}
+    environment: 
+      - POST_DATABASE_HOST=post_db
+      - POST_DATABASE=posts
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
+    depends_on: 
+      - post_db
+    ports: 
+      - '5000:5000'
+    logging: 
+      driver: "fluentd"
+      options: 
+        fluentd-address: localhost:24224
+        tag: service.post
     networks: 
-      - reddit_frontent
+      - reddit_frontend
       - reddit_backend
   comment:
     build: ../src/comment
     image: ${USERNAME}/comment:${MS_COMMENT_VERSION}
     networks:
-      - reddit_frontent
+      - reddit_frontend
       - reddit_backend
+    environment: 
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
   prometheus:
     image: ${USERNAME}/prometheus
     ports:
@@ -37,7 +59,7 @@ services:
       - '--storage.tsdb.retention=1d'
     networks: 
         - reddit_backend
-        - reddit_frontent
+        - reddit_frontend
   node_exporter:
     image: prom/node-exporter:v0.15.2
     user: root
@@ -55,6 +77,6 @@ volumes:
   post_db:
   prometheus_data:
 
-networks: 
-  reddit_frontent:
+networks:
+  reddit_frontend:
   reddit_backend:
