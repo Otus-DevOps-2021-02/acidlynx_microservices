@@ -1,7 +1,7 @@
 # acidlynx_microservices
 acidlynx microservices repository
 
-Homework 16
+## Homework 16
 
 1. Installed docker, docker-machine
 2. Worked with docker and remote docker (yandex-cloud instance via docker-machine)
@@ -40,6 +40,36 @@ docker tag reddit:latest <your-login>/otus-reddit:1.0 # tag image
 docker push <your-login>/otus-reddit:1.0 # push image to hub (or any other repo)
 ```
 
-Homework 18
+## Homework 18
 
 `docker-compose` has option -p for --project-name in commands
+
+## Homework 21
+
+How to create docker-host and use it with docker-machine
+
+```bash
+yc compute instance create \
+  --name docker-host \
+  --zone ru-central1-a \
+  --network-interface subnet-name=default-ru-central1-a,nat-ip-version=ipv4 \
+  --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=15 \
+  --ssh-key ~/.ssh/yandexcloud_appuser_rsa.pub 
+	
+docker-machine create \
+  --driver generic \
+  --generic-ip-address=178.154.225.52 \
+  --generic-ssh-user yc-user \
+  --generic-ssh-key ~/.ssh/yandexcloud_appuser_rsa \
+  docker-host
+  
+eval $(docker-machine env docker-host)
+```
+
+Do the same command in several folders
+
+```bash
+for i in ui post-py comment; do cd src/$i; bash docker_build.sh; cd -; done
+```
+
+Docker hub is [here](https://hub.docker.com/u/binira)
